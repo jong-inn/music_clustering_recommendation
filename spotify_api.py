@@ -66,11 +66,11 @@ class SpotifyAPI:
 
     def get_query_by_id(self, type_, id_):
         '''
-        type_: artist, album, tracks, audio-features
+        type_: albums, artists, tracks, audio-features
         id_  : id
         '''
         
-        assert type_ in ["artist", "album", "tracks", "audio-features"], "type_ has to be one of 'artist', 'album', and 'track'"
+        assert type_ in ["albums", "artists", "tracks", "audio-features"], "type_ has to be one of 'artist', 'album', and 'track'"
         assert type(id_) == str, "id_ has to be string format"
         
         headers = {
