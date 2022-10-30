@@ -18,7 +18,7 @@ query_endpoint = "https://api.spotify.com/v1/%s"
 
 class SpotifyAPI:
     
-    def __init__(self, client_id, client_secret):
+    def __init__(self, client_id=client_id, client_secret=client_secret):
         self.client_id = client_id
         self.client_secret = client_secret
         
@@ -38,11 +38,14 @@ class SpotifyAPI:
         req = requests.post(token_endpoint, data=token_data, headers=headers)
         print(f"response status code: {req.status_code}")
         
-        self.access_token = req.json()['access_token']
-        self.expires_in = req.json()['expires_in']
-        self.token_type = req.json()['token_type']
+        if req.status_code == 200:
+            self.access_token = req.json()['access_token']
+            self.expires_in = req.json()['expires_in']
+            self.token_type = req.json()['token_type']
+        else:
+            raise ValueError("token access is denied")
 
-    def get_query_by_type(self, type_, query):
+    def get_query_by_search(self, type_, query):
         '''
         type_: artist, album, track
         query: name
@@ -62,7 +65,7 @@ class SpotifyAPI:
         
         req = requests.get(lookup_endpoint, headers=headers)
         
-        return req.json()
+        return self.distinguish_status_code(req)
 
     def get_query_by_id(self, type_, id_):
         '''
@@ -70,7 +73,7 @@ class SpotifyAPI:
         id_  : id
         '''
         
-        assert type_ in ["albums", "artists", "tracks", "audio-features"], "type_ has to be one of 'artist', 'album', and 'track'"
+        assert type_ in ["albums", "artists", "tracks", "audio-features"], "type_ has to be one of 'artists', 'albums', 'tracks', and 'audio-features'"
         assert type(id_) == str, "id_ has to be string format"
         
         headers = {
@@ -80,8 +83,42 @@ class SpotifyAPI:
         
         req = requests.get(lookup_endpoint, headers=headers)
         
-        return req.json()
+        return self.distinguish_status_code(req)
+    
+    def get_query_by_ids(self, type_, ids):
+        '''
+        type_: albums, artists, tracks, audio-features
+        ids  : array of ids
+        '''
+        
+        assert type_ in ["albums", "artists", "tracks", "audio-features"], "type_ has to be one of 'artists', 'albums', 'tracks', and 'audio-features'"
+        assert iter(ids), "ids has to be iterable format"
+        assert sum(map(lambda x: type(x) == str, ids)) == len(ids), "an element in ids has to be string format"
+        
+        headers = {
+            "Authorization": f"Bearer {self.access_token}"
+        }
+        query_data = urlencode({
+            "ids": ",".join(ids)
+        })
+        lookup_endpoint = f"{query_endpoint % type_}?{query_data}"
+        
+        req = requests.get(lookup_endpoint, headers=headers)
+        
+        return self.distinguish_status_code(req)
+        
 
+    def distinguish_status_code(self, request):
+        if request.status_code == 200:
+            return request.json()
+        elif request.status_code == 401:
+            raise ValueError("token might be expired")
+        elif request.status_code == 403:
+            raise ValueError("bad OAuth request")
+        elif request.status_code == 429:
+            raise ValueError("exceed rate limits")
+        else:
+            raise ValueError("new error")
 
 if __name__ == '__main__':
     
