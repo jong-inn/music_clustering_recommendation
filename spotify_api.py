@@ -94,6 +94,10 @@ class SpotifyAPI:
         assert type_ in ["albums", "artists", "tracks", "audio-features"], "type_ has to be one of 'artists', 'albums', 'tracks', and 'audio-features'"
         assert iter(ids), "ids has to be iterable format"
         assert sum(map(lambda x: type(x) == str, ids)) == len(ids), "an element in ids has to be string format"
+        assert len(ids) <= 20 if type_ == "albums" else True, "the maximum number of an album batch is 20"
+        assert len(ids) <= 50 if type_ == "artists" else True, "the maximum number of an artist batch is 50"
+        assert len(ids) <= 50 if type_ == "tracks" else True, "the maximum number of a track batch is 50"
+        assert len(ids) <= 100 if type_ == "audio-features" else True, "the maximum number of audio-features batch is 100"
         
         headers = {
             "Authorization": f"Bearer {self.access_token}"
