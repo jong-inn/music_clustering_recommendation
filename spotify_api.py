@@ -1,13 +1,12 @@
 """
     Get data from Spotify using API
+    Import spotify_api in spotify_scraper.py
     
-
 """
 
 
 import requests
 import base64
-import json
 from urllib.parse import urlencode
 from spotify_config import config_read
 
@@ -60,6 +59,7 @@ class SpotifyAPI:
         query_data = urlencode({
               "q": query
             , "type": type_
+            , "market": "US"
         })
         lookup_endpoint = f"{query_endpoint % 'search'}?{query_data}"
         
@@ -79,7 +79,16 @@ class SpotifyAPI:
         headers = {
             "Authorization": f"Bearer {self.access_token}"
         }
-        lookup_endpoint = f"{query_endpoint % type_}/{id_}"
+        if type_ in ["albums", "tracks"]:
+            query_data = urlencode({
+                  "id": id_
+                , "market": "US"
+            })
+        elif type_ in ["artists", "audio-features"]:
+            query_data = urlencode({
+                  "id": id_
+            })
+        lookup_endpoint = f"{query_endpoint % type_}?{query_data}"
         
         req = requests.get(lookup_endpoint, headers=headers)
         
@@ -102,9 +111,15 @@ class SpotifyAPI:
         headers = {
             "Authorization": f"Bearer {self.access_token}"
         }
-        query_data = urlencode({
-            "ids": ",".join(ids)
-        })
+        if type_ in ["albums", "tracks"]:
+            query_data = urlencode({
+                  "ids": ",".join(ids)
+                , "market": "US"
+            })
+        elif type_ in ["artists", "audio-features"]:
+            query_data = urlencode({
+                  "ids": ",".join(ids)
+            })
         lookup_endpoint = f"{query_endpoint % type_}?{query_data}"
         
         req = requests.get(lookup_endpoint, headers=headers)
@@ -125,7 +140,7 @@ class SpotifyAPI:
             raise ValueError("new error")
 
 if __name__ == '__main__':
-    
+    # for test
     spotify = SpotifyAPI(client_id, client_secret)
     spotify.get_token()
     
@@ -135,7 +150,6 @@ if __name__ == '__main__':
         token_type   : {spotify.token_type}  
           """)
     
-    # result = spotify.get_query_by_id("tracks", "6QHYEZlm9wyfXfEM1vSu1P")
     result = spotify.get_query_by_id("audio-features", "6QHYEZlm9wyfXfEM1vSu1P")
     
     for k, v in result.items():
