@@ -1,1 +1,10 @@
 .DS_Store
+__pycache__/
+config/
+extracted_data/albums/
+extracted_data/artists/
+extracted_data/audio-features/
+extracted_data/tracks/
+extracted_data/*.json
+spotify_million_playlist_dataset/data/*.json
+spotify_million_playlist_dataset/md5sums
