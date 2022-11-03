@@ -137,7 +137,7 @@ class SpotifyAPI:
         elif request.status_code == 429:
             raise ValueError("exceed rate limits")
         else:
-            raise ValueError("new error")
+            raise ValueError(f"new error, status code: {request.status_code}")
 
 if __name__ == '__main__':
     # for test
