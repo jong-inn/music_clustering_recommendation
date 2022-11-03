@@ -39,12 +39,13 @@ class SpotifyScraper:
                 for batch_keys in self.make_batches(type_, target_keys):
                     response = spotify.get_query_by_ids(type_, batch_keys)
                     type_extracted.update(dict(zip(batch_keys, response[response_key])))
+                    time.sleep(5)
             except Exception as e:
                 print(e)
             finally:
                 with open(matched_file_path, "w") as f:
                     f.write(json.dumps(type_extracted))
-                
+
                 end_time = time.time()
                 print(f"elapsed time: {round((end_time - start_time) / 60, 2)} mins")
     
