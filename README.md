@@ -55,3 +55,49 @@ client_secret = tv...0x
 ```bash
 python spotify_scraper.py --type=artists --all=False
 ```
+
+<br>
+
+---
+
+## __AWS Lake Formation__
+<br>
+
+sources: https://docs.aws.amazon.com/lake-formation/latest/dg/getting-started-setup.html
+
+<br>
+
+### __1) Complete initial AWS configuration tasks__
+<br>
+
+<br>
+
+### __2) Create an IAM role for workflows__
+<br>
+
+<br>
+
+### __3) Create a data lake administrator__
+<br>
+
+<br>
+
+### __4) Change the default permission model__
+<br>
+
+<br>
+
+### __5) Create additional Lake Formation users__
+<br>
+
+<br>
+
+### __6) Configure an Amazon S3 location for your data lake__
+<br>
+
+<br>
+
+### __7) Prepare for using governed tables__
+<br>
+
+<br>
