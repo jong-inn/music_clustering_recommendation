@@ -70,10 +70,59 @@ sources: https://docs.aws.amazon.com/lake-formation/latest/dg/getting-started-se
 ### __1) Complete initial AWS configuration tasks__
 <br>
 
+&ensp;&ensp; - Create an Administrator IAM User
+<br>
+&ensp;&ensp; - Sign in as an IAM User
+
 <br>
 
 ### __2) Create an IAM role for workflows__
 <br>
+
+&ensp;&ensp; - A workflow defines the data source and schedule to import data into your data lake
+<br>
+&ensp;&ensp; - A workflow can be created by AWS Glue crawlers
+<br>
+&ensp;&ensp; 1) Sign in as an Administrator
+<br>
+&ensp;&ensp; 2) Choose roles and create roles
+<br>
+&ensp;&ensp; 3) Choose AWS service and Glue
+<br>
+&ensp;&ensp; 4) Add permissions within AWSGlueServiceRole and name the role LakeFormationWorkflowRole
+<br>
+&ensp;&ensp; 5) On Roles page, choose the LakeFormationWorkflowRole
+<br>
+&ensp;&ensp; 6) On Summary page, under the Permission tab, choose Add inline policy, add the policy below
+<br>
+
+```json
+# Replace <account-id> with a valid AWS account number
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                 "lakeformation:GetDataAccess",
+                 "lakeformation:GrantPermissions"
+             ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": ["iam:PassRole"],
+            "Resource": [
+                "arn:aws:iam::<account-id>:role/LakeFormationWorkflowRole"
+            ]
+        }
+    ]
+}
+```
+&ensp;&ensp; 7) Verify that LakeFormationWorkflowRole has two policies attached
+<br>
+&ensp;&ensp; 8) If you import data from outside, add an inline policy granting permissions to read the source data
 
 <br>
 
