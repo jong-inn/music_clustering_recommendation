@@ -129,6 +129,82 @@ sources: https://docs.aws.amazon.com/lake-formation/latest/dg/getting-started-se
 ### __3) Create a data lake administrator__
 <br>
 
+&ensp;&ensp; 1) Choose one user who is to be a data lake administrator
+<br>
+&ensp;&ensp; 2) Add a inline policy, which grants the data lake administrator permission to create the Lake Formation service-linked role
+<br>
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "iam:CreateServiceLinkedRole",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "iam:AWSServiceName": "lakeformation.amazonaws.com"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:PutRolePolicy"
+            ],
+            "Resource": "arn:aws:iam::<account-id>:role/aws-service-role/lakeformation.amazonaws.com/AWSServiceRoleForLakeFormationDataAccess"
+        }
+    ]
+}
+```
+
+&ensp;&ensp; 3) Add a PassRole inline policy to create and run workflows
+<br>
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PassRolePermissions",
+            "Effect": "Allow",
+            "Action": [
+                "iam:PassRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::<account-id>:role/LakeFormationWorkflowRole"
+            ]
+        }
+    ]
+}
+```
+
+&ensp;&ensp; 4) Add a RAMAcess inline policy to grant or receive cross-account Lake Formation permissions
+<br>
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ram:AcceptResourceShareInvitation",
+                "ram:RejectResourceShareInvitation",
+                "ec2:DescribeAvailabilityZones",
+                "ram:EnableSharingWithAwsOrganization"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+&ensp;&ensp; 5) Open the AWS Lake Formation console and sign in as the IAM administrator user
+<br>
+&ensp;&ensp; 6) If a Welcome to Lake Formation window appears, choose get started
+
 <br>
 
 ### __4) Change the default permission model__
