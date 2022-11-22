@@ -226,3 +226,26 @@ sources: https://docs.aws.amazon.com/lake-formation/latest/dg/getting-started-se
 <br>
 
 <br>
+
+---
+
+## __AWS RDS__
+<br>
+
+sources: https://www.youtube.com/watch?v=bC-G4OcLr5g
+
+<br>
+
+### __1) Create an RDS instance with MySQL__
+<br>
+
+### __2) Make the database public__
+<br>
+
+### __3) Install MySQL Work bench and establish a connection__
+<br>
+
+### __4) Import Data to table__
+<br>
+
+---
