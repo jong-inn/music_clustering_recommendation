@@ -245,6 +245,10 @@ sources: https://www.youtube.com/watch?v=bC-G4OcLr5g
 ### __3) Install MySQL Work bench and establish a connection__
 <br>
 
+&ensp;&ensp; 1) Put the endpoint of the database to hostname
+<br>
+&ensp;&ensp; 2) Put username and password
+
 ### __4) Import Data to table__
 <br>
 
