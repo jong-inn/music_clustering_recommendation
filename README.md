@@ -88,11 +88,13 @@ sources: https://www.youtube.com/watch?v=bC-G4OcLr5g
 ## __MySQL Local Server__
 <br>
 
-### __1) Create a local instance with MySQL__
+### __1) Download MySQL Server and Workbench and install them__
 <br>
 
-### __2) Modify a config file__
+### __2) Create a local instance with Workbench__
 <br>
 
-### __3) Grant privilege to users__
+### __3) Grant privileges to users__
 <br>
+
+![image](./img/grant_privileges.png)
