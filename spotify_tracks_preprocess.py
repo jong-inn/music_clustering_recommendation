@@ -1,6 +1,7 @@
 # pacakges
 
 import os, json
+import pandas as pd
 
 # variables
 
@@ -91,7 +92,45 @@ def get_the_number_of_rows():
             count += len(f.readlines())
             
     print(count)
+   
     
+def pre_processed_df():
+    folder = "tracks"
+    target_file_path = os.sep.join([output_file_path % folder, "pre_processed.%s.extracted.mpd.pickle" % folder])
+    
+    if os.path.isfile(target_file_path):
+        return pd.read_pickle(target_file_path)
+    
+    file_list = [f for f in os.listdir(input_file_path % folder) if f.startswith(folder) and f.endswith(".json")]
+    file_list.sort()
+    
+    result_list = []
+    
+    try:
+        for file in file_list:
+            print(file)
+
+            # read a json file
+            with open(os.sep.join([input_file_path % folder, file]), "r") as f:
+                tmp = json.loads(f.read())
+                print("Read JSON file")
+                
+            # extract values for each feature and store them in result_list
+            for key, sample_value in tmp.items():
+                if sample_value == None:
+                    continue
+                else:
+                    result_list.append(extract_features(sample_value))
+    
+    except Exception as e:
+        print(e)
+    
+    finally:
+        df = pd.DataFrame(result_list)
+        df.to_pickle(os.sep.join([output_file_path % folder, "pre_processed.%s.extracted.mpd.pickle" % folder]))
+        
+        return df
+        
 
 if __name__ == "__main__":
 
