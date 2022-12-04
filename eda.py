@@ -1,9 +1,13 @@
 
 
-import os
-import json
+import os, json
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from spotify_tracks_preprocess import pre_processed_df
 
 file_path  = "./extracted_data/%s"
+album_file_path = "./album_table.csv"
 
 audio_features_min_max = {
     "acousticness": (0.0, 1.0),
@@ -37,8 +41,10 @@ def extract_one_fixed_sample(folder):
     print(f"length: {len(tmp)}")
     print(f"type  : {type(tmp)}")
     print(f"file  : {file_list[-1]}")
+    sample = next(iter(tmp.values()))
     print(f"""first sample:
-                    {next(iter(tmp.values()))}""")
+                    {sample}""")
+    return sample
 
 def extract_min_max_sample(file_list, attr, min_max_func, min_max_val=None):
     
@@ -63,9 +69,7 @@ def extract_min_max_sample(file_list, attr, min_max_func, min_max_val=None):
     
     print(f"find min or max value {record} and return: {val['id']}")
     return val["id"]
-                
-            
-    
+
 
 def extract_samples_for_audio_features():
     folder = "audio-features"
@@ -84,10 +88,23 @@ def extract_samples_for_audio_features():
     # return result
     
 
+def album_file_stat():
+    albums = pd.read_csv(album_file_path)
+    albums["id"] = albums.id.str.strip()
+    albums["release_date"] = albums.release_date.str.strip()
+
+    print(f"columns: \n{albums.columns}")
+    print(f"shape: {albums.shape}")
+    print(f"unique id: {len(albums.id.unique())}")
+    print(f"duplicated rows: {albums.duplicated().sum()}")
+    print(f"{len(albums.id.unique())} + {albums.duplicated().sum()} = {len(albums.id.unique())+albums.duplicated().sum()}")
+    
+    return albums
+
     
 if __name__ == "__main__":
     
-    # extract_one_fixed_sample("audio-features")
+    extract_one_fixed_sample("audio-features")
     # extract_one_fixed_sample("tracks")
 
-    extract_samples_for_audio_features()
+    # extract_samples_for_audio_features()
