@@ -1,6 +1,7 @@
 # pacakges
 
 import os, json
+import pandas as pd
 
 # variables
 
@@ -133,4 +134,6 @@ if __name__ == "__main__":
 
     # pre_process()
     
-    get_the_number_of_rows()
+    # get_the_number_of_rows()
+    
+    pre_processed_df()
