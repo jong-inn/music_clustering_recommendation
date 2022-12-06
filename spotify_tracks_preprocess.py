@@ -127,6 +127,8 @@ def pre_processed_df():
     
     finally:
         df = pd.DataFrame(result_list)
+        print(f"duplicated: {df.duplicated(subset='track_id').sum()}")
+        df.drop_duplicates(subset="track_id")
         df.to_pickle(os.sep.join([output_file_path % folder, "pre_processed.%s.extracted.mpd.pickle" % folder]))
         
         return df
@@ -136,4 +138,6 @@ if __name__ == "__main__":
 
     # pre_process()
         
-    get_the_number_of_rows()
+    # get_the_number_of_rows()
+    
+    pre_processed_df()
