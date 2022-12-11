@@ -72,15 +72,15 @@ def create_exploded_df(sampled_df, key_col, target_col):
     return exploded
 
 
-def write_csv(output_path, sampled_df, exploded, key_col, target_col):
+def write_csv(output_path, sampled_df, exploded, key_col, target_col, use_explode):
     
     key =  key_col.replace("ids", "").replace("id", "").replace("_", "")
     target =  target_col.replace("ids", "").replace("id", "").replace("_", "")
     
-    sampled_df.to_csv(output_path % f"sampled_{key}.csv", header=False)
+    sampled_df.to_csv(output_path % f"sampled_{key}.csv", header=False, index=False)
     
-    if exploded:
-        exploded.to_csv(output_path % f"{key}_{target}_ids.csv", header=False)
+    if use_explode:
+        exploded.to_csv(output_path % f"{key}_{target}_ids.csv", header=False, index=False)
     
     
 def main():
@@ -149,7 +149,8 @@ def main():
         exploded=exploded,
         key_col=key_col,
         # key_col="audio_features", # only for audio-features
-        target_col=target_col
+        target_col=target_col,
+        use_explode=use_explode
     )
     
 
@@ -157,34 +158,3 @@ if __name__ == "__main__":
     
     main()  
     
-
-# # sampling with track_id
-# sampled_tracks = tracks.loc[tracks.track_id.isin(sampled_ids.track_id)].reset_index(drop=True)
-# print(f"sampled_tracks shape: {sampled_tracks.shape}")
-
-# # create another dataframe for track_id and artist_id
-
-# tracks_artists = sampled_tracks.loc[:, ["track_id", "artists_id"]]
-# multiple_artists_indices = tracks_artists.loc[tracks_artists.artists_id.str.len() > 22].index
-
-# ## the number of rows that have multiple artists
-# print(f"""
-# the number of rows that have multiple artists: {len(multiple_artists_indices)}
-# the number of artists in sampled_tracks      : {tracks_artists.artists_id.str.split(",").str.len().sum()}
-# """)
-
-# ## exploding the rows that have multiple artists
-# tracks_artists["artists_id"] =  tracks_artists.artists_id.str.split(",")
-# exploded = tracks_artists.explode("artists_id")
-# duplicated_exploded_indices = exploded.index[exploded.index.duplicated()]
-
-# print(f"""
-# shape of tracks_artists before exploding: {tracks_artists.shape}
-# shape of tracks_artists after exploding : {exploded.shape}
-# """)
-
-# print(f"""
-# compare artists_id that have multiple artists between original and exploded ones
-# original - exploded: {set(multiple_artists_indices).difference(set(duplicated_exploded_indices))}
-# exploded - original: {set(duplicated_exploded_indices).difference(set(multiple_artists_indices))}
-# """)
