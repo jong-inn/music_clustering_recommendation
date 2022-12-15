@@ -1,11 +1,23 @@
--- CREATE DATABASE spotify;
 
--- DROP TABLE AudioFeatures;
-CREATE TABLE AudioFeatures (
-    track_id Varchar(24),
-	acousticness Float,
-    danceability Float,
+
+USE spotify;
+
+
+CREATE TABLE temp_total (
+	track_id Varchar(22),
+    album_id Varchar(22),
+    disc_number Int,
     duration_ms Int,
+    explicit Bool,
+    track_name Varchar(300),
+    album_popularity Int,
+    track_number Int,
+    duration_m Float,
+    release_date Varchar(10),
+    release_year Int,
+    release_year_bin Int,
+    acousticness Float,
+    danceability Float,
     energy Float,
     instrumentalness Float,
     liveness Float,
@@ -15,31 +27,14 @@ CREATE TABLE AudioFeatures (
     tempo Float,
     time_signature Int,
     valence Float,
-    PRIMARY KEY (track_id)
+    artist_popularity Int,
+    genres_combined Varchar(1800),
+	artist_name_combined Varchar(300),
+    artist_popularity_max Int
 );
 
--- DROP TABLE Tracks;
-CREATE TABLE Tracks (
-    track_id Varchar(24),
-    album_id Varchar(24),
-    artists_id Varchar(24),
-    disc_number Int,
-    duration_ms Int,
-    explicit Boolean,
-    name Varchar(80),
-    popularity Int,
-    track_number Int,
-    PRIMARY KEY (track_id)
+CREATE TABLE temp_track_artist (
+	track_id Varchar(22),
+    artist_id Varchar(22),
+    artist_name Varchar(100)
 );
-
--- DROP TABLE Artists;
-CREATE TABLE Artists (
-    artist_id Varchar(24),
-    PRIMARY KEY (artist_id)
-);
-
--- DROP TABLE Albums;
-CREATE TABLE Albums (
-    album_id Varchar(24),
-    PRIMARY KEY (album_id)
-)
