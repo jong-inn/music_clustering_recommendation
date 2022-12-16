@@ -60,27 +60,17 @@ python spotify_scraper.py --type=artists --all=False
 
 ---
 
-## __AWS RDS__
+## __EDA__
 <br>
 
-sources: https://www.youtube.com/watch?v=bC-G4OcLr5g
+---
 
+## __Pre-processing__
 <br>
 
-### __1) Create an RDS instance with MySQL__
-<br>
+---
 
-### __2) Make the database public__
-<br>
-
-### __3) Install MySQL Work bench and establish a connection__
-<br>
-
-&ensp;&ensp; 1) Put the endpoint of the database to hostname
-<br>
-&ensp;&ensp; 2) Put username and password
-
-### __4) Import Data to table__
+## __S3 & Athena__
 <br>
 
 ---
@@ -98,3 +88,15 @@ sources: https://www.youtube.com/watch?v=bC-G4OcLr5g
 <br>
 
 ![image](./img/grant_privileges.png)
+
+---
+
+## __MySQL Connector__
+<br>
+
+---
+
+## __Recommendation System__
+<br>
+
+---
