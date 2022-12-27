@@ -72,7 +72,7 @@ class SpotifyScraper:
                     response = spotify.get_query_by_ids(type_, batch_keys)
                     # update the type_extracted dictionary with the result dictionary
                     type_extracted.update(dict(zip(batch_keys, response[response_key])))
-                    time.sleep(10)
+                    # time.sleep(10)
             except Exception as e:
                 print(e)
             finally:
