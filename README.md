@@ -3,6 +3,36 @@ Recommend musics using clustering (the project in database class)
 
 ---
 
+## __Spotify Million Playlist Dataset__
+<br>
+
+source: https://www.aicrowd.com/challenges/spotify-million-playlist-dataset-challenge
+<br>
+
+* Challenge dataset
+
+* To predict subsequent tracks, given an initial set of tracks
+
+* Playlists created by users from January 2010 to November 2017
+
+* Simple statistics of dataset
+> number of playlists: 1000000
+<br>
+number of tracks: 66346428
+<br>
+number of unique tracks: 2262292
+<br>
+number of unique albums: 734684
+<br>
+number of unique artists: 295860
+<br>
+
+You can find more information in
+[stats.txt](./spotify_million_playlist_dataset/stats.txt)
+
+
+---
+
 ## __Scraping Data__
 <br>
 
