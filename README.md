@@ -37,6 +37,7 @@ You can find more information in
 
 * Example in ___mpd.slice.*.json___
 <br>
+
 ```json
 "tracks": [
     {
@@ -62,6 +63,7 @@ You can find more information in
 
 * Example in ___extracted.mpd.slice.*.json___ (key is track_id)
 <br>
+
 ```json
 {
     "0gKNzy4DOOJ3RFdzVgIAO3": {
@@ -149,7 +151,7 @@ You can check out details in [Spotify Developer's Web API](https://developer.spo
 ---
 
 ## __Pre-processing__
-* Many keys of data were unmatched. Simply, we scraped information for around 2,140,000 tracks, but only about 1,470,000 tracks were joined. Furthermore, the scraped data were too big to handle, so we selected songs that had album popularity equal to or greater than 30 and were released in the 2010s. Also, we dropped attributes that are not numerical except the artists' genre. Thus, we finally got 89,307 tracks for final dataset.
+* Many keys of data were unmatched. Simply, we scraped information for around 2,140,000 tracks, but only about 1,470,000 tracks were joined. Furthermore, the scraped data were too big to handle, so we selected songs that had album popularity equal to or greater than 30 and were released in the 2010s. Also, we dropped attributes that are not numerical except the artists' genre. And we flattened JSON files to fit the format of AWS Athena. Thus, we finally got 89,307 tracks for final dataset.
 
 * Final attributes
 
@@ -187,7 +189,8 @@ You can check out details in [Spotify Developer's Web API](https://developer.spo
 
 ---
 
-## __ERD__
+## __ERD & Table Schema__
+
 <br>
 
 
@@ -195,7 +198,10 @@ You can check out details in [Spotify Developer's Web API](https://developer.spo
 ---
 
 ## __S3 & Athena__
+To import data to MySQL Server, we converted JSON files to CSV files with AWS Athena.
 <br>
+
+![image](./img/S3_Athena.png)
 
 ---
 
