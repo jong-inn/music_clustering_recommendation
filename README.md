@@ -193,14 +193,14 @@ Many keys of data were unmatched. Simply, we scraped information for around 2,14
 <br>
 
 * ERD
-<br>
+
 We declared four main entities, ***Artist***, ***Album***, ***Track***, and ***Audio Features***. As well as relationship ***Releases***, ***Sings***, ***Contains*** and ***Constitutes***. Our final draft of our ER Diagram went as such: The ***Artist*** entity ***Releases*** ***Album*** which ***Contains*** ***Track*** that ***Constitutes*** ***Audio Features***. Especially ***Audio Features*** is the weak entity. Furthermore, we used thick lines because all instances of entities have to participate.
 
-![image](./img/erd.png)
+![image](./img/ERD.png)
 <br>
 
 * Table Schema
-<br>
+
 In creating our tables, we renamed the ***Releases*** and ***Sings*** relationships to ***Artist_Album*** and ***Artist_Track*** accordingly. These tables then held the foreign keys for ***Artist***, ***Album***, and ***Track*** as they connected the two pairs of tables together. These two tables are helpful to store many to many relationships.
 
 ![image](./img/table_schema.png)
@@ -253,20 +253,21 @@ We analyzed data by plotting histograms. As you can see below, we cut off tracks
 <br>
 
 * K-Means Clustering
-<br>
+
 Since we don’t have any users’ log data, we cannot recommend songs based on their preferences. So instead, we intended to recommend tracks with only their metadata and audio features. We created K-Means clustering models by each genre. Without genres, the recommendation would be too random. We assumed that users at least wanted to get freshness within the genres of that songs. However, Spotify provides us only an artist’s genres, not ones of the track. It is reasonable because it is hard to define the genre of songs these days. So instead, we used the artists’ genres, and there can be several artists in one track. Also, one artist can be categorized into several genres. Thus, one track can have many genres, meaning one track can be used more than once to build the models. In addition, Spotify provides a lot of subgenres, so we must group them into larger categories. We selected 15 genres: rock, hip hop, pop, jazz, blues, country, metal, reggae, folk, soul, EDM, dance, Latin, funk, and others. And we categorized all genres, for example, putting k-pop into the pop category.
 
 * Model Architecture
-<br>
+
 We should use different scales and the number of clusterings in each model because we built models by each genre. After training models with scikit-learn package, we can label all tracks with specific clustering numbers in each model. Therefore, when new input songs come into the system’s entrance, it gives them to corresponding models. Then, we get predicted clustering numbers and can call related datasets. Finally, we select one random sample from datasets, as shown in below figure. In addition, the example in figure recommends only one track, but if the input song has several genres, then the system can recommend several tracks.
 
 ![image](./img/model_architecture.png)
 <br>
 
 * Test
-<br>
+
 We have to select test inputs first. Since we don’t have any performance measurements, our performance depends on users’ listening. Thus, we picked songs that are well-known or recently released. In below figure, we chose Taylor Swift’s Midnight Rain and Jung Kook’s Dreamers, famous artists who recently released albums. Also, we decided on Eminem, Coldplay, and Drake’s songs, expecting the system to recommend tracks with similar moods because their music styles are very bold.
 <br>
+
 During prediction, we assumed we already knew the track_ids, but we need information on those new inputs. Thus, we requested the data to Spotify API first. Also, we called the Python scaler object and rescaled the test set’s features. Finally, we got eight tracks recommended. Due to randomness, we got songs that have different language lyrics. Among recommendations, we found that three songs have similar moods: Taylor Swift’s Midnight Rain and Adam Lambert’s Rumors, Eminem’s Lose Yourself and Yelawolf’s Get Mine, and Jung Kook’s Dreamers and Lionel Garcia’s Te Bese.
 
 ![image](./img/test.png)
