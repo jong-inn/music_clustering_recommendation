@@ -218,6 +218,7 @@ To import data to MySQL Server, we converted JSON files to CSV files with AWS At
 ---
 
 ## __MySQL Local Server__
+We tried building a MySQL database with AWS RDS. Although we started with a free tier, the cost was slightly higher than expected. Thus, we focused on the local server. We tried several times to connect with each other but failed due to complicated firewall conditions. We learned a reason why people use cloud services.
 <br>
 
 ### __1) Download MySQL Server and Workbench and install them__
@@ -226,12 +227,23 @@ To import data to MySQL Server, we converted JSON files to CSV files with AWS At
 ### __2) Create a local instance with Workbench__
 <br>
 
-### __3) Create tables and import data__
+### __3) Create tables__
+[setup.sql](./mysql/setup.sql): initial queries for setting up tables
 <br>
 
 ---
 
 ## __MySQL Connector__
+We tried importing data into the database with MySQL import wizard. But, it failed with lots of errors. So, we loaded csv tables on Python environment and connected with mysql using the mysql-connector-python package. It was much faster than the import wizard and very convenient. After finishing the setup, we executed several queries.
+<br>
+
+* Import data into the database
+
+We uploaded some sample csv files. You can check this with those files. More details on [mysql_import_data.ipynb](./mysql/mysql_import_data.ipynb).
+
+* Execute quries in Python environment
+
+We just joined all tables by queries. We didn't need to merge dataframes in Python Environment. More details on [mysql_connector.ipynb](./mysql/mysql_connector.ipynb).
 <br>
 
 ---
@@ -250,6 +262,7 @@ We analyzed data by plotting histograms. As you can see below, we cut off tracks
 ---
 
 ## __Recommendation System__
+More details on [spotify_kmeans.ipynb](./spotify_kmeans.ipynb).
 <br>
 
 * K-Means Clustering
